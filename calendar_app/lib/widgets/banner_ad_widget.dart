@@ -20,24 +20,35 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   }
 
   void _loadAd() {
-    _bannerAd = AdService.instance.createBannerAd(
-      onAdLoaded: (ad) {
-        if (mounted) {
-          setState(() => _isAdLoaded = true);
-        }
-      },
-      onAdFailedToLoad: (ad, error) {
-        ad.dispose();
-        // 読み込み失敗時は何も表示しない
-        debugPrint('バナー広告の読み込みに失敗: ${error.message}');
-      },
-    );
-    _bannerAd?.load();
+    try {
+      final ad = AdService.instance.createBannerAd(
+        onAdLoaded: (ad) {
+          if (mounted) {
+            setState(() => _isAdLoaded = true);
+          }
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          debugPrint('バナー広告の読み込みに失敗: ${error.message}');
+        },
+      );
+
+      if (ad != null) {
+        _bannerAd = ad;
+        _bannerAd?.load();
+      }
+    } catch (e) {
+      debugPrint('バナー広告の初期化に失敗: $e');
+    }
   }
 
   @override
   void dispose() {
-    _bannerAd?.dispose();
+    try {
+      _bannerAd?.dispose();
+    } catch (e) {
+      debugPrint('バナー広告の破棄に失敗: $e');
+    }
     super.dispose();
   }
 
@@ -48,10 +59,15 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
       return const SizedBox.shrink();
     }
 
-    return SizedBox(
-      width: _bannerAd!.size.width.toDouble(),
-      height: _bannerAd!.size.height.toDouble(),
-      child: AdWidget(ad: _bannerAd!),
-    );
+    try {
+      return SizedBox(
+        width: _bannerAd!.size.width.toDouble(),
+        height: _bannerAd!.size.height.toDouble(),
+        child: AdWidget(ad: _bannerAd!),
+      );
+    } catch (e) {
+      debugPrint('バナー広告の表示に失敗: $e');
+      return const SizedBox.shrink();
+    }
   }
 }

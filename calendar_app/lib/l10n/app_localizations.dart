@@ -140,6 +140,7 @@ class AppLocalizations {
       'photoAddFailed': '写真の追加に失敗しました',
       'photoDeleteFailed': '写真の削除に失敗しました',
       'imageLoadFailed': '画像を読み込めませんでした',
+      'permissionDenied': '権限が拒否されました。設定から許可してください。',
 
       // 初回起動
       'welcome': 'ようこそ',
@@ -252,6 +253,7 @@ class AppLocalizations {
       'photoAddFailed': 'Failed to add photo',
       'photoDeleteFailed': 'Failed to delete photo',
       'imageLoadFailed': 'Failed to load image',
+      'permissionDenied': 'Permission denied. Please allow in settings.',
 
       // First launch
       'welcome': 'Welcome',
@@ -364,6 +366,7 @@ class AppLocalizations {
       'photoAddFailed': '添加照片失败',
       'photoDeleteFailed': '删除照片失败',
       'imageLoadFailed': '无法加载图片',
+      'permissionDenied': '权限被拒绝，请在设置中允许。',
 
       // 首次启动
       'welcome': '欢迎',
@@ -481,6 +484,7 @@ class AppLocalizations {
   String get photoAddFailed => translate('photoAddFailed');
   String get photoDeleteFailed => translate('photoDeleteFailed');
   String get imageLoadFailed => translate('imageLoadFailed');
+  String get permissionDenied => translate('permissionDenied');
 
   // First launch
   String get welcome => translate('welcome');

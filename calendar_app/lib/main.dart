@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' hide Category;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,8 +12,14 @@ import 'l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // AdMobを初期化
-  await AdService.instance.initialize();
+
+  // AdMobを初期化（失敗してもアプリは起動する）
+  try {
+    await AdService.instance.initialize();
+  } catch (e) {
+    debugPrint('AdMob初期化エラー: $e');
+  }
+
   runApp(const CalendarApp());
 }
 

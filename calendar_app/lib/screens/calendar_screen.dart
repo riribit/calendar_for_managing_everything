@@ -306,30 +306,36 @@ class _CalendarScreenState extends State<CalendarScreen> {
     final calendar = _selectedCalendar;
     if (calendar == null) return;
 
+    final l10n = AppLocalizations.of(context);
+    final theme = ThemeProvider.of(context);
+    final cardColor = theme?.cardColor ?? const Color(0xFF1A1A2E);
+    final textColor = theme?.textColor ?? Colors.white;
+    final accentColor = theme?.accentColor ?? const Color(0xFF6366F1);
+
     final source = await showDialog<ImageSource>(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A2E),
-        title: const Text('写真を追加', style: TextStyle(color: Colors.white)),
+        backgroundColor: cardColor,
+        title: Text(
+          l10n?.addPhoto ?? '写真を追加',
+          style: TextStyle(color: textColor),
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: const Icon(Icons.camera_alt, color: Color(0xFF6366F1)),
-              title: const Text(
-                'カメラで撮影',
-                style: TextStyle(color: Colors.white),
+              leading: Icon(Icons.camera_alt, color: accentColor),
+              title: Text(
+                l10n?.takePhoto ?? 'カメラで撮影',
+                style: TextStyle(color: textColor),
               ),
               onTap: () => Navigator.pop(context, ImageSource.camera),
             ),
             ListTile(
-              leading: const Icon(
-                Icons.photo_library,
-                color: Color(0xFF6366F1),
-              ),
-              title: const Text(
-                'ライブラリから選択',
-                style: TextStyle(color: Colors.white),
+              leading: Icon(Icons.photo_library, color: accentColor),
+              title: Text(
+                l10n?.chooseFromLibrary ?? 'ライブラリから選択',
+                style: TextStyle(color: textColor),
               ),
               onTap: () => Navigator.pop(context, ImageSource.gallery),
             ),
@@ -376,11 +382,29 @@ class _CalendarScreenState extends State<CalendarScreen> {
         );
         setState(() => _dailyNote = saved);
       }
+    } on PlatformException catch (e) {
+      // 権限拒否やプラットフォーム固有のエラー
+      if (mounted) {
+        String message;
+        if (e.code == 'photo_access_denied' ||
+            e.code == 'camera_access_denied') {
+          message = l10n?.permissionDenied ?? '権限が拒否されました。設定から許可してください。';
+        } else {
+          message = l10n?.photoAddFailed ?? '写真の追加に失敗しました';
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(message)),
+        );
+      }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('写真の追加に失敗しました: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              '${l10n?.photoAddFailed ?? "写真の追加に失敗しました"}: $e',
+            ),
+          ),
+        );
       }
     }
   }

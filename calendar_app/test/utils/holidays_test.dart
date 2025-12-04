@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:app1/utils/holidays.dart';
+import 'package:calendar_app/utils/holidays.dart';
 
 void main() {
   group('Holidays', () {

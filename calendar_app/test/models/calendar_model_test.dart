@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:app1/models/calendar_model.dart';
+import 'package:calendar_app/models/calendar_model.dart';
 
 void main() {
   group('CalendarModel', () {

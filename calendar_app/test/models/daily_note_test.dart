@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:app1/models/daily_note.dart';
+import 'package:calendar_app/models/daily_note.dart';
 
 void main() {
   group('DailyNote', () {

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:app1/models/category.dart';
+import 'package:calendar_app/models/category.dart';
 
 void main() {
   group('Category', () {

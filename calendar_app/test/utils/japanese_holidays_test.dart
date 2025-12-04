@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:app1/utils/japanese_holidays.dart';
+import 'package:calendar_app/utils/japanese_holidays.dart';
 
 void main() {
   group('JapaneseHolidays', () {

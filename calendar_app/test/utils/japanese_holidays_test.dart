@@ -88,12 +88,15 @@ void main() {
     group('Vernal and Autumnal Equinox', () {
       test('should recognize Vernal Equinox Day (around 3/20-21)', () {
         // 春分の日は年によって変動（通常3/20か3/21）
-        final date2024 = DateTime(2024, 3, 20);
-        final date2025 = DateTime(2025, 3, 20);
         // 少なくとも近辺の日付で祝日になるはず
         expect(
-          JapaneseHolidays.isHoliday(date2024) ||
+          JapaneseHolidays.isHoliday(DateTime(2024, 3, 20)) ||
               JapaneseHolidays.isHoliday(DateTime(2024, 3, 21)),
+          isTrue,
+        );
+        expect(
+          JapaneseHolidays.isHoliday(DateTime(2025, 3, 20)) ||
+              JapaneseHolidays.isHoliday(DateTime(2025, 3, 21)),
           isTrue,
         );
       });
